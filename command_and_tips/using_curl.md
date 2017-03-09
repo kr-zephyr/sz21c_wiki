@@ -7,4 +7,4 @@ curl --data "message=Test" http://{{domain}}:6060/send -> POST로 호출됨
 curl -X POST http://{{domain}}:6180/vcc/v1/optimum -d "{}" -H "Content-Type: application/json"
 
 #### References
-[curl manual](https://hostpresto.com/community/tutorials/install-and-configure-gitlab-on-ubuntu-16-04/)
+- [https://curl.haxx.se/docs/manual.html](https://curl.haxx.se/docs/manual.html)
