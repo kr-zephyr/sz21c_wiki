@@ -5,6 +5,8 @@
 // sudo 권한 부여 필요
 // 자동으로 패키지 업데이트함
 // 이하 로그
+
+```
 scin21c@devscin21c:~/letsencrypt/letsencrypt$ ./letsencrypt-auto
 Requesting to rerun ./letsencrypt-auto with root privileges...
 [sudo] password for scin21c:
@@ -19,7 +21,13 @@ Installation succeeded.
   utils.PersistentlyDeprecated2018,
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator apache, Installer apache
+```
 
+- ssl 인증서를 적용할 도메인을 선택한다.
+- 현재 웹서버에 설정된 모든 도메인 리스트가 노출된다.
+- 'Enter'를 눌러 모든 도메인의 인증서를 갱신한다.
+
+```
 Which names would you like to activate HTTPS for?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 1: dev.sz21c.com
@@ -45,7 +53,12 @@ Deploying Certificate to VirtualHost /etc/apache2/sites-enabled/developer-le-ssl
 Deploying Certificate to VirtualHost /etc/apache2/sites-enabled/devops-le-ssl.conf
 Deploying Certificate to VirtualHost /etc/apache2/sites-enabled/wiki-le-ssl.conf
 Deploying Certificate to VirtualHost /etc/apache2/sites-enabled/www-le-ssl.conf
+```
 
+- 갱신 중 http를 https로 redirect할지를 결정해야 한다.
+- '2: Redirect...'를 선택해서 http로 들어오는 request를 모두 https로 redirect 시켜준다.
+
+```
 Please choose whether or not to redirect HTTP traffic to HTTPS, removing HTTP access.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 1: No redirect - Make no further changes to the webserver configuration.
@@ -92,19 +105,22 @@ IMPORTANT NOTES:
    Donating to EFF:                    https://eff.org/donate-le
 
 scin21c@devscin21c:~/letsencrypt/letsencrypt$
-
+```
 
 ### openssl을 이용하여 pem(Privacy-enhanced Electronic Mail) 인증서로터 .p12(private key PKCS#12) 인증서 생성
 참고 : https://www.openssl.org 
+
 {% highlight shell %} sudo openssl pkcs12 -export -in /etc/letsencrypt/live/www.sz21c.com/fullchain.pem -inkey /etc/letsencrypt/live/www.sz21c.com/privkey.pem -out keystore.p12 -name tomcat -CAfile /etc/letsencrypt/live/www.sz21c.com/chain.pem -caname root
 // 실행 위치에 keystore.p12 파일 생성됨
 // 생성 중 keystore.p12를 사용하기 위한 password를 입력해야 한다.
 // 이하 로그
+
+```
 scin21c@devscin21c:/home/services$ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/www.sz21c.com/fullchain.pem -inkey /etc/letsencrypt/live/www.sz21c.com/privkey.pem -out keystore.p12 -name tomcat -CAfile /etc/letsencrypt/live/www.sz21c.com/chain.pem -caname root
 Enter Export Password:
 Verifying - Enter Export Password:
 scin21c@devscin21c:/home/services$
-
+```
 
 ### WAS에 적용하기 위해 WAS 재기동
 
